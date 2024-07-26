@@ -71,15 +71,16 @@ function updateCarInfo(carNumber) {
     `;
 }
 
-document.getElementById('bid-1000').addEventListener('click', () => {
-    placeBid(1000);
-});
-
-document.getElementById('bid-5000').addEventListener('click', () => {
-    placeBid(5000);
+document.getElementById('place-bid').addEventListener('click', () => {
+    const bidAmount = parseInt(document.getElementById('bid-amount').value, 10);
+    placeBid(bidAmount);
 });
 
 function placeBid(amount) {
+    if (isNaN(amount) || amount <= 0) {
+        alert('Por favor ingresa una cantidad válida para pujar');
+        return;
+    }
     if (money >= amount) {
         money -= amount;
         document.getElementById('money').textContent = money;
