@@ -1,154 +1,91 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const auctionList = document.getElementById('auction-list');
-    const budgetDisplay = document.getElementById('budget');
-    const nextCarButton = document.getElementById('next-car-button');
+let currentCar = 1;
+const totalCars = 8; // Cambia esto según el número total de imágenes de carros
+let money = 10000; // Dinero inicial para cada jugador
 
-    // Definición de los autos con múltiples imágenes y detalles
-    const cars = [
-        { 
-            id: 1, 
-            images: ['car1_1.jpg', 'car1_2.jpg', 'car1_3.jpg', 'car1_4.jpg', 'car1_5.jpg', 'car1_6.jpg', 'car1_7.jpg', 'car1_8.jpg'], 
-            brand: 'Toyota', 
-            model: 'Corolla', 
-            year: 2020, 
-            highestBid: 5000, 
-            info: `
-                <div class="detail-item"><span class="label">Número de lote:</span><span class="value">62036244</span></div>
-                <div class="detail-item"><span class="label">ID vehicular (VIN):</span><span class="value">JTDS4RCE3LJ******</span></div>
-                <div class="detail-item"><span class="label">Código de título:</span><span class="value">FL - CERT OF TITLE-REBUILT (P)</span></div>
-                <div class="detail-item"><span class="label">Odómetro:</span><span class="value">23,328 mi (ACTUAL)</span></div>
-                <div class="detail-item"><span class="label">Daño principal:</span><span class="value">MINOR DENT/SCRATCHES</span></div>
-                <div class="detail-item"><span class="label">Cilindros:</span><span class="value">4</span></div>
-                <div class="detail-item"><span class="label">Color:</span><span class="value">BLACK</span></div>
-                <div class="detail-item"><span class="label">Motor:</span><span class="value">2.0L 4</span></div>
-                <div class="detail-item"><span class="label">Transmisión:</span><span class="value">AUTOMATIC</span></div>
-                <div class="detail-item"><span class="label">Tracción:</span><span class="value">Front-wheel Drive</span></div>
-                <div class="detail-item"><span class="label">Tipo de artículo:</span><span class="value">AUTOMOBILE</span></div>
-                <div class="detail-item"><span class="label">Combustible:</span><span class="value">GAS</span></div>
-                <div class="detail-item"><span class="label">Llaves:</span><span class="value">YES</span></div>
-                <div class="detail-item"><span class="label">Destacados:</span><span class="value">Run and Drive</span></div>
-                <div class="detail-item"><span class="label">Estado de Elegibilidad:</span><span class="value">Chequee Ahora Chequee Ahora</span></div>
-            `
-        },
-        { 
-            id: 2, 
-            images: ['car2_1.jpg', 'car2_2.jpg', 'car2_3.jpg', 'car2_4.jpg', 'car2_5.jpg', 'car2_6.jpg', 'car2_7.jpg', 'car2_8.jpg'], 
-            brand: 'Honda', 
-            model: 'Civic', 
-            year: 2019, 
-            highestBid: 4500, 
-            info: `
-                <div class="detail-item"><span class="label">Motor:</span><span class="value">1.8L</span></div>
-                <div class="detail-item"><span class="label">Transmisión:</span><span class="value">Manual</span></div>
-                <div class="detail-item"><span class="label">Kilometraje:</span><span class="value">20,000 km</span></div>
-            `
-        },
-        { 
-            id: 3, 
-            images: ['car3_1.jpg', 'car3_2.jpg', 'car3_3.jpg', 'car3_4.jpg', 'car3_5.jpg', 'car3_6.jpg', 'car3_7.jpg', 'car3_8.jpg'], 
-            brand: 'Ford', 
-            model: 'Mustang', 
-            year: 2021, 
-            highestBid: 7000, 
-            info: `
-                <div class="detail-item"><span class="label">Motor:</span><span class="value">5.0L</span></div>
-                <div class="detail-item"><span class="label">Transmisión:</span><span class="value">Automática</span></div>
-                <div class="detail-item"><span class="label">Kilometraje:</span><span class="value">10,000 km</span></div>
-            `
-        }
-    ];
+const carInfo = [
+    {
+        lotNumber: "62036244",
+        vin: "JTDS4RCE3LJ******",
+        titleCode: "FL - CERT OF TITLE-REBUILT (P)",
+        odometer: "23,328 mi (ACTUAL)",
+        damage: "MINOR DENT/SCRATCHES",
+        cylinders: 4,
+        color: "BLACK",
+        engine: "2.0L 4",
+        transmission: "AUTOMATIC",
+        drivetrain: "Front-wheel Drive",
+        type: "AUTOMOBILE",
+        fuel: "GAS",
+        keys: "YES",
+        highlights: "Run and Drive",
+        eligibility: "Chequee Ahora"
+    },
+    // Añade más objetos de información para los otros carros
+];
 
-    // Definición de los jugadores
-    const players = [
-        { id: 1, name: 'Jugador 1', budget: 10000 },
-        { id: 2, name: 'Jugador 2', budget: 10000 }
-    ];
-
-    // Jugador actual (puedes agregar una lógica para cambiar entre jugadores)
-    let currentPlayer = players[0];
-
-    // Índice del auto actual
-    let currentCarIndex = 0;
-    let currentImageIndex = 0;
-
-    // Función para actualizar el presupuesto en la interfaz
-    function updateBudgetDisplay() {
-        budgetDisplay.textContent = `Dinero disponible: $${currentPlayer.budget}`;
+document.getElementById('registration-form').addEventListener('submit', (event) => {
+    event.preventDefault();
+    const email = document.getElementById('email').value;
+    const code = document.getElementById('code').value;
+    if (code.length === 4) {
+        // Guardar la información del jugador (puedes agregar validación adicional aquí)
+        console.log(`Registrado: ${email} con código ${code}`);
+        // Ocultar el formulario de registro y mostrar el juego
+        document.getElementById('registration').style.display = 'none';
+        document.getElementById('game').style.display = 'flex';
+    } else {
+        alert('El código debe tener 4 dígitos');
     }
-
-    // Renderizado del auto actual
-    function renderCurrentCar() {
-        auctionList.innerHTML = '';
-        const car = cars[currentCarIndex];
-        const carElement = document.createElement('div');
-        carElement.classList.add('auction-card');
-        carElement.innerHTML = `
-            <div class="image-container">
-                <button class="prev" onclick="showPrevImage()">&#10094;</button>
-                <img src="${car.images[currentImageIndex]}" alt="${car.brand} ${car.model}">
-                <button class="next" onclick="showNextImage()">&#10095;</button>
-            </div>
-            <div class="auction-details">
-                <h2>${car.brand} ${car.model} (${car.year})</h2>
-                <p>Highest Bid: <span class="bid">$${car.highestBid}</span></p>
-                <button class="button" onclick="placeBid(${car.id})">Pujar</button>
-            </div>
-            <div class="vehicle-details">
-                <h2>Detalles del Vehículo</h2>
-                ${car.info}
-            </div>
-        `;
-        auctionList.appendChild(carElement);
-    }
-
-    // Función para mostrar la imagen anterior
-    window.showPrevImage = function() {
-        const car = cars[currentCarIndex];
-        currentImageIndex = (currentImageIndex === 0) ? car.images.length - 1 : currentImageIndex - 1;
-        renderCurrentCar();
-    }
-
-    // Función para mostrar la siguiente imagen
-    window.showNextImage = function() {
-        const car = cars[currentCarIndex];
-        currentImageIndex = (currentImageIndex === car.images.length - 1) ? 0 : currentImageIndex + 1;
-        renderCurrentCar();
-    }
-
-    // Función para pujar
-    window.placeBid = function(carId) {
-        const bidAmount = prompt(`Ingrese su oferta (Presupuesto disponible: $${currentPlayer.budget}):`);
-        if (bidAmount) {
-            const car = cars.find(c => c.id === carId);
-            const bid = parseFloat(bidAmount);
-
-            if (bid > car.highestBid && bid <= currentPlayer.budget) {
-                car.highestBid = bid;
-                currentPlayer.budget -= bid;
-                updateBudgetDisplay();
-                renderCurrentCar();
-                alert('¡Oferta aceptada!');
-            } else if (bid > currentPlayer.budget) {
-                alert('No tienes suficiente presupuesto para esta oferta.');
-            } else {
-                alert('La oferta debe ser mayor que la oferta más alta actual.');
-            }
-        }
-    }
-
-    // Función para mostrar el siguiente auto
-    nextCarButton.addEventListener('click', function() {
-        if (currentCarIndex < cars.length - 1) {
-            currentCarIndex++;
-            currentImageIndex = 0; // Reiniciar el índice de la imagen
-            renderCurrentCar();
-        } else {
-            alert('No hay más autos.');
-        }
-    });
-
-    // Inicializa la vista
-    updateBudgetDisplay();
-    renderCurrentCar();
 });
 
+document.getElementById('next-car').addEventListener('click', () => {
+    currentCar++;
+    if (currentCar > totalCars) {
+        currentCar = 1; // Reinicia al primer carro
+    }
+    updateCarInfo(currentCar);
+});
+
+function updateCarInfo(carNumber) {
+    document.getElementById('car-image').src = `car${carNumber}.jpg`;
+    const info = carInfo[carNumber - 1];
+    const carInfoElement = document.getElementById('car-info');
+    carInfoElement.innerHTML = `
+        <strong>Número de lote:</strong> ${info.lotNumber}<br>
+        <strong>ID vehicular (VIN):</strong> ${info.vin}<br>
+        <strong>Código de título:</strong> ${info.titleCode}<br>
+        <strong>Odómetro:</strong> ${info.odometer}<br>
+        <strong>Daño principal:</strong> ${info.damage}<br>
+        <strong>Cilindros:</strong> ${info.cylinders}<br>
+        <strong>Color:</strong> ${info.color}<br>
+        <strong>Motor:</strong> ${info.engine}<br>
+        <strong>Transmisión:</strong> ${info.transmission}<br>
+        <strong>Tracción:</strong> ${info.drivetrain}<br>
+        <strong>Tipo de artículo:</strong> ${info.type}<br>
+        <strong>Combustible:</strong> ${info.fuel}<br>
+        <strong>Llaves:</strong> ${info.keys}<br>
+        <strong>Destacados:</strong> ${info.highlights}<br>
+        <strong>Estado de Elegibilidad:</strong> ${info.eligibility}
+    `;
+}
+
+document.getElementById('bid-1000').addEventListener('click', () => {
+    placeBid(1000);
+});
+
+document.getElementById('bid-5000').addEventListener('click', () => {
+    placeBid(5000);
+});
+
+function placeBid(amount) {
+    if (money >= amount) {
+        money -= amount;
+        document.getElementById('money').textContent = money;
+    } else {
+        alert('No tienes suficiente dinero para esta puja');
+    }
+}
+
+// Inicializa con el primer carro y el dinero inicial
+updateCarInfo(currentCar);
+document.getElementById('money').textContent = money;
