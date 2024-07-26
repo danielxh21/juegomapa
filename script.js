@@ -1,6 +1,9 @@
 let currentCar = 1;
 const totalCars = 8; // Cambia esto según el número total de imágenes de carros
 let money = 10000; // Dinero inicial para cada jugador
+let highestBid = 0; // Puja más alta
+let timer = 10; // Temporizador inicial
+let timerInterval;
 
 const carInfo = [
     {
@@ -18,9 +21,10 @@ const carInfo = [
         fuel: "GAS",
         keys: "YES",
         highlights: "Run and Drive",
-        eligibility: "Chequee Ahora"
+        eligibility: "Chequee Ahora",
+        minPrice: 5000
     },
-    // Añade más objetos de información para los otros carros
+    // Añade más objetos de información para los otros carros con su precio mínimo
 ];
 
 document.getElementById('registration-form').addEventListener('submit', (event) => {
@@ -28,16 +32,19 @@ document.getElementById('registration-form').addEventListener('submit', (event) 
     const email = document.getElementById('email').value;
     const code = document.getElementById('code').value;
     if (code.length === 4) {
-        // Guardar la información del jugador (puedes agregar validación adicional aquí)
         console.log(`Registrado: ${email} con código ${code}`);
-        // Ocultar el formulario de registro y mostrar el juego
         document.getElementById('registration').style.display = 'none';
         document.getElementById('game').style.display = 'flex';
-        // Inicializa el juego con el primer carro
         updateCarInfo(currentCar);
+        startTimer();
     } else {
         alert('El código debe tener 4 dígitos');
     }
+});
+
+document.getElementById('place-bid').addEventListener('click', () => {
+    const bidAmount = parseInt(document.getElementById('bid-amount').value, 10);
+    placeBid(bidAmount);
 });
 
 document.getElementById('next-car').addEventListener('click', () => {
@@ -45,7 +52,12 @@ document.getElementById('next-car').addEventListener('click', () => {
     if (currentCar > totalCars) {
         currentCar = 1; // Reinicia al primer carro
     }
+    highestBid = 0;
+    document.getElementById('highest-bid-amount').textContent = highestBid;
     updateCarInfo(currentCar);
+    document.getElementById('next-car').style.display = 'none';
+    document.getElementById('winner').style.display = 'none';
+    startTimer();
 });
 
 function updateCarInfo(carNumber) {
@@ -69,24 +81,45 @@ function updateCarInfo(carNumber) {
         <strong>Destacados:</strong> ${info.highlights}<br>
         <strong>Estado de Elegibilidad:</strong> ${info.eligibility}
     `;
+    document.getElementById('min-price').textContent = info.minPrice;
 }
 
-document.getElementById('place-bid').addEventListener('click', () => {
-    const bidAmount = parseInt(document.getElementById('bid-amount').value, 10);
-    placeBid(bidAmount);
-});
-
 function placeBid(amount) {
+    const minPrice = carInfo[currentCar - 1].minPrice;
     if (isNaN(amount) || amount <= 0) {
         alert('Por favor ingresa una cantidad válida para pujar');
         return;
     }
+    if (amount <= highestBid || amount < minPrice) {
+        alert('La puja debe ser mayor que la puja más alta actual y el precio mínimo');
+        return;
+    }
     if (money >= amount) {
+        highestBid = amount;
+        document.getElementById('highest-bid-amount').textContent = highestBid;
         money -= amount;
         document.getElementById('money').textContent = money;
+        if (timer <= 1) {
+            timer += 5;
+        }
     } else {
         alert('No tienes suficiente dinero para esta puja');
     }
+}
+
+function startTimer() {
+    timer = 10;
+    document.getElementById('timer').textContent = timer;
+    clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+        timer--;
+        document.getElementById('timer').textContent = timer;
+        if (timer <= 0) {
+            clearInterval(timerInterval);
+            document.getElementById('winner').style.display = 'block';
+            document.getElementById('next-car').style.display = 'block';
+        }
+    }, 1000);
 }
 
 // Inicializa el dinero disponible
