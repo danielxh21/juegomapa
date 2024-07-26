@@ -1,184 +1,52 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #000; /* Fondo negro */
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 100vh; /* Ajuste de altura para centrar el contenido */
-}
-
-.container {
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     text-align: center;
-    width: 80%;
-    margin-top: 20px;
-    position: relative;
 }
 
-.budget {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background: #f1f1f1;
-    padding: 10px;
-    border-radius: 4px;
-    font-weight: bold;
+#registration {
+    margin: 20px auto;
+    width: 300px;
+    text-align: left;
 }
 
-h1 {
-    margin-bottom: 20px;
-    color: #fff; /* Color de texto blanco */
-}
-
-.auction-list {
+#registration form {
     display: flex;
-    justify-content: center; /* Centrar el contenido */
-    flex-wrap: wrap; /* Permitir que los elementos se envuelvan */
+    flex-direction: column;
 }
 
-.auction-card {
-    background: #f1f1f1;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    margin: 10px;
-    padding: 15px;
-    width: 100%; /* Ajustar a 100% en pantallas pequeñas */
-    display: flex;
-    flex-direction: column; /* Colocar los elementos en una columna para pantallas pequeñas */
-    justify-content: space-between;
-}
-
-.image-container {
-    position: relative;
-    width: 100%; /* Ajustar a 100% en pantallas pequeñas */
-    margin-bottom: 20px; /* Añadir espacio inferior entre la imagen y el contenido */
-}
-
-.image-container img {
-    width: 100%;
-    border-radius: 8px;
-    object-fit: cover; /* Asegurar que la imagen se recorte adecuadamente */
-}
-
-.prev, .next {
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    width: auto;
-    margin-top: -22px;
-    padding: 16px;
-    color: black; /* Cambiar el color de las flechas a negro */
-    font-weight: bold;
-    font-size: 18px;
-    transition: 0.6s ease;
-    border-radius: 0 3px 3px 0;
-    user-select: none;
-}
-
-.next {
-    right: 0;
-    border-radius: 3px 0 0 3px;
-}
-
-.prev:hover, .next:hover {
-    background-color: rgba(255, 255, 255, 0.8); /* Fondo claro para las flechas al pasar el cursor */
-}
-
-.auction-details,
-.vehicle-details {
-    width: 100%; /* Ajustar a 100% en pantallas pequeñas */
-    margin-left: 0; /* Eliminar margen izquierdo */
-    text-align: left; /* Alinear el texto a la izquierda */
-}
-
-.auction-details h2,
-.vehicle-details h2 {
-    margin: 0;
-}
-
-.auction-details p,
-.vehicle-details p {
+#registration label,
+#registration input {
     margin: 5px 0;
 }
 
-.auction-details .bid {
-    font-weight: bold;
-    color: #333;
+#game {
+    display: none;
+    flex-direction: column;
+    align-items: center;
 }
 
-.vehicle-details {
-    text-align: left;
-    padding: 10px;
-    background: #f1f1f1;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+#car-container {
+    margin: 20px auto;
+    width: 80%;
 }
 
-.vehicle-details .detail-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 5px 0;
-    border-bottom: 1px solid #ddd;
-}
-
-.vehicle-details .detail-item:last-child {
-    border-bottom: none;
-}
-
-.vehicle-details .label {
-    font-weight: bold;
-    color: #333;
-}
-
-.vehicle-details .value {
-    color: #555;
-}
-
-.button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+#car-image {
     width: 100%;
-    margin-top: 20px; /* Añadir margen superior */
+    height: auto;
 }
 
-.button:hover {
-    background-color: #45a049;
+#car-details {
+    text-align: left;
+    width: 80%;
+    margin: 20px auto;
 }
 
-/* Media Queries para pantallas pequeñas */
-@media (max-width: 768px) {
-    .container {
-        width: 90%; /* Ajustar el contenedor principal a 90% en pantallas pequeñas */
-        padding: 10px; /* Reducir el padding */
-    }
+#bidding {
+    margin-top: 20px;
+}
 
-    .budget {
-        position: relative;
-        margin-bottom: 20px; /* Añadir espacio inferior */
-        width: 100%; /* Ajustar a 100% en pantallas pequeñas */
-    }
-
-    .auction-card {
-        flex-direction: column; /* Colocar los elementos en una columna */
-    }
-
-    .image-container {
-        width: 100%; /* Ajustar a 100% en pantallas pequeñas */
-    }
-
-    .auction-details,
-    .vehicle-details {
-        width: 100%; /* Ajustar a 100% en pantallas pequeñas */
-        margin-left: 0; /* Eliminar margen izquierdo */
-    }
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-top: 20px;
 }
