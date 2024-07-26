@@ -33,6 +33,8 @@ document.getElementById('registration-form').addEventListener('submit', (event) 
         // Ocultar el formulario de registro y mostrar el juego
         document.getElementById('registration').style.display = 'none';
         document.getElementById('game').style.display = 'flex';
+        // Inicializa el juego con el primer carro
+        updateCarInfo(currentCar);
     } else {
         alert('El código debe tener 4 dígitos');
     }
@@ -47,7 +49,7 @@ document.getElementById('next-car').addEventListener('click', () => {
 });
 
 function updateCarInfo(carNumber) {
-    document.getElementById('car-image').src = `car${carNumber}.jpg`;
+    document.getElementById('car-image').src = `car${carNumber}_1.jpg`;
     const info = carInfo[carNumber - 1];
     const carInfoElement = document.getElementById('car-info');
     carInfoElement.innerHTML = `
@@ -86,6 +88,5 @@ function placeBid(amount) {
     }
 }
 
-// Inicializa con el primer carro y el dinero inicial
-updateCarInfo(currentCar);
+// Inicializa el dinero disponible
 document.getElementById('money').textContent = money;
