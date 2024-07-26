@@ -7,7 +7,9 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Bienvenido al Juego de Subastas de Autos</h1>
+    <header>
+        <h1>Bienvenido al Juego de Subastas de Autos</h1>
+    </header>
     <div id="registration">
         <h2>Registro</h2>
         <form id="registration-form">
@@ -28,11 +30,13 @@
         </div>
         <p>Dinero disponible: <span id="money">10000</span></p>
         <div id="bidding">
-            <button id="bid-1000">Pujar 1000</button>
-            <button id="bid-5000">Pujar 5000</button>
+            <label for="bid-amount">Cantidad de Pujas:</label>
+            <input type="number" id="bid-amount" min="0" step="100">
+            <button id="place-bid">Pujar</button>
         </div>
         <button id="next-car">Siguiente Carro</button>
     </div>
     <script src="script.js"></script>
 </body>
 </html>
+
