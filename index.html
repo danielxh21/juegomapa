@@ -29,14 +29,17 @@
             <p id="car-info"></p>
         </div>
         <p>Dinero disponible: <span id="money">10000</span></p>
+        <p>Precio mínimo: <span id="min-price"></span></p>
+        <p>Temporizador: <span id="timer">10</span> segundos</p>
         <div id="bidding">
             <label for="bid-amount">Cantidad de Pujas:</label>
             <input type="number" id="bid-amount" min="0" step="100">
             <button id="place-bid">Pujar</button>
         </div>
-        <button id="next-car">Siguiente Carro</button>
+        <p id="highest-bid">Puja más alta: <span id="highest-bid-amount">0</span></p>
+        <p id="winner" style="display:none;">¡Ganaste el auto!</p>
+        <button id="next-car" style="display:none;">Siguiente Carro</button>
     </div>
     <script src="script.js"></script>
 </body>
 </html>
-
