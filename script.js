@@ -108,7 +108,7 @@ function placeBid(amount) {
 }
 
 function startTimer() {
-    timer = 10;
+    timer = 60;
     document.getElementById('timer').textContent = timer;
     clearInterval(timerInterval);
     timerInterval = setInterval(() => {
