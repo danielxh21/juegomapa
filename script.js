@@ -2,7 +2,7 @@ let currentCar = 1;
 const totalCars = 8; // Cambia esto según el número total de imágenes de carros
 let money = 10000; // Dinero inicial para cada jugador
 let highestBid = 0; // Puja más alta
-let timer = 10; // Temporizador inicial
+let timer = 60; // Temporizador inicial de un minuto
 let timerInterval;
 
 const carInfo = [
